@@ -5,6 +5,9 @@ Hi! The goal of this repository is to find out which is the fastest SSR framewor
  2. Vue SSR Native
  3. NuxtJS SSR
 
+# Screenshots
+![Plain Express Server](/apache_benchmarks/plain/bm_c_10_n_1000.png "Plain Express Server Concurrency 10 Requests 1000 Graph")
+
 # Setup
 - Best to run all tests on Virtual Box.
 - Download and install Virtual Box
