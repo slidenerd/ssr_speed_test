@@ -185,10 +185,84 @@ server {
 }
 '''
 
+# Benchmarking Process
+- We are using the apache bench tool to do all the benchmarks. Have a better tool in mind? Feel free to submit a PR or open an issue.
+- It is preinstalled on OSX (host machine in my case), Type ab and see if you get an error
+- If it is not installed, you may need to find out how to install it
+- Below is a sample of how a test is done, we set concurrency to 1, number of requests to fire as 1000 and the option to not exit the test if we get any socket errors. Replace the IP address with yours
+```
+# for testing plain express ssr setup
+ab -c 1 -n 1000 -r http://192.168.1.104:9001/
 
-# Benchmarks
-- Check each of the benchmarks file
+# for testing native vue ssr setup
+ab -c 1 -n 1000 -r http://192.168.1.104:9002/
+
+# for testing nuxt ssr setup
+ab -c 1 -n 1000 -r http://192.168.1.104:9003/
+
+```
+- The full set of tests we do for plain express is given as per the commands below
+```
+# for testing plain express ssr setup with concurrency at 1 and 1000 requests
+ab -c 1 -n 1000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 1 and 5000 requests
+ab -c 1 -n 5000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 1 and 10000 requests
+ab -c 1 -n 10000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 10 and 1000 requests
+ab -c 10 -n 1000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 10 and 5000 requests
+ab -c 10 -n 5000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 10 and 10000 requests
+ab -c 10 -n 10000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 25 and 1000 requests
+ab -c 25 -n 1000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 25 and 5000 requests
+ab -c 25 -n 5000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 25 and 10000 requests
+ab -c 25 -n 10000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 50 and 1000 requests
+ab -c 50 -n 1000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 50 and 5000 requests
+ab -c 50 -n 5000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 50 and 10000 requests
+ab -c 50 -n 10000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 100 and 1000 requests
+ab -c 100 -n 1000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 100 and 5000 requests
+ab -c 100 -n 5000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 100 and 10000 requests
+ab -c 100 -n 10000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 200 and 1000 requests
+ab -c 200 -n 1000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 200 and 5000 requests
+ab -c 200 -n 5000 -r http://192.168.1.104:9001/
+
+# for testing plain express ssr setup with concurrency at 200 and 10000 requests
+ab -c 200 -n 10000 -r http://192.168.1.104:9001/
+
+```
+
+# Results
+- Check each of the benchmarks file in the apache benchmarks folder
 - The tool used is Apache Bencharks 2.3 <$Revision: 1826891 $>
 - Virtual Box Version 6.0.10 r132072 (Qt5.6.3)
 - Host machine OSX High Sierra 10.13.6 (17G65)
 - Virtual Machine version: Ubuntu 18.04 Bionic 10 GB HDD, 1GB RAM (default settings for everything except Network where we used Bridged Adapter)
+- Did not enable Keep Alive for any of them (equal grounds for everyone)
