@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title= title
+    :mix(css) '/css/app.css'
+  body
+    block content
+    :mix(js) '/js/manifest.js'
+    :mix(js) '/js/vendor.js'
+    :mix(js) '/js/app.js'
