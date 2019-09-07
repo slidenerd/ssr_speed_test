@@ -6,7 +6,14 @@ Hi! The goal of this repository is to find out which is the fastest SSR framewor
  3. NuxtJS SSR
 
 # Screenshots
-![Plain Express Server](https://raw.githubusercontent.com/slidenerd/ssr_speed_test/master/apache_benchmarks/plain/bm_c_1_n_1000_graph.png "Plain Express Server Concurrency 10 Requests 1000 Graph")
+## Plain Express Server with Vue SSR: Concurrency 10 Requests 10000
+![Plain Express Server with Vue SSR](https://raw.githubusercontent.com/slidenerd/ssr_speed_test/master/apache_benchmarks/plain/bm_c_10_n_10000_graph.png "Plain Express Server Concurrency 10 Requests 10000 Graph")
+
+## Native Vue SSR: Concurrency 10 Requests 10000
+![Native Vue SSR](https://raw.githubusercontent.com/slidenerd/ssr_speed_test/master/apache_benchmarks/native/bm_c_10_n_10000_graph.png "Native Vue SSR: Concurrency 10 Requests 10000")
+
+## Nuxt SSR: Concurrency 10 Requests 10000
+![Native Vue SSR](https://raw.githubusercontent.com/slidenerd/ssr_speed_test/master/apache_benchmarks/nuxt/bm_c_10_n_10000_graph.png "Nuxt SSR: Concurrency 10 Requests 10000")
 
 # Setup
 - Best to run all tests on Virtual Box.
