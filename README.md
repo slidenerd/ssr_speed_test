@@ -185,6 +185,8 @@ server {
 }
 '''
 
+http://www.bradlanders.com/2013/04/15/apache-bench-and-gnuplot-youre-probably-doing-it-wrong/
+
 # Benchmarking Process
 - We are using the apache bench tool to do all the benchmarks. Have a better tool in mind? Feel free to submit a PR or open an issue.
 - It is preinstalled on OSX (host machine in my case), Type ab and see if you get an error
