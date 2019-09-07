@@ -176,7 +176,7 @@ server {
 
         #reverse proxy
         location / {
-                proxy_pass http://127.0.0.1:8001;
+                proxy_pass http://127.0.0.1:3000;
                 include nginxconfig.io/proxy.conf;
         }
 
@@ -185,7 +185,7 @@ server {
 }
 '''
 
-http://www.bradlanders.com/2013/04/15/apache-bench-and-gnuplot-youre-probably-doing-it-wrong/
+
 
 # Benchmarking Process
 - We are using the apache bench tool to do all the benchmarks. Have a better tool in mind? Feel free to submit a PR or open an issue.
@@ -194,75 +194,26 @@ http://www.bradlanders.com/2013/04/15/apache-bench-and-gnuplot-youre-probably-do
 - Below is a sample of how a test is done, we set concurrency to 1, number of requests to fire as 1000 and the option to not exit the test if we get any socket errors. Replace the IP address with yours
 ```
 # for testing plain express ssr setup
-ab -c 1 -n 1000 -r http://192.168.1.104:9001/
+ab -c 1 -n 1000 -g output_directory_with_tsv_files -r http://192.168.1.104:9001/ 
 
 # for testing native vue ssr setup
-ab -c 1 -n 1000 -r http://192.168.1.104:9002/
+ab -c 1 -n 1000 -g output_directory_with_tsv_files -r http://192.168.1.104:9002/
 
 # for testing nuxt ssr setup
-ab -c 1 -n 1000 -r http://192.168.1.104:9003/
+ab -c 1 -n 1000 -g output_directory_with_tsv_files -r http://192.168.1.104:9003/
 
 ```
-- The full set of tests we do for plain express is given as per the commands below
+- Run the script ./run_benchmark.sh file to generate outputs for each server
+- The script takes 2 arguments, the full url where one of your servers is running (test one server at a time)
+- And the folder name inside which that server's details will be stored
+- Example is shown below
 ```
-# for testing plain express ssr setup with concurrency at 1 and 1000 requests
-ab -c 1 -n 1000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 1 and 5000 requests
-ab -c 1 -n 5000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 1 and 10000 requests
-ab -c 1 -n 10000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 10 and 1000 requests
-ab -c 10 -n 1000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 10 and 5000 requests
-ab -c 10 -n 5000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 10 and 10000 requests
-ab -c 10 -n 10000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 25 and 1000 requests
-ab -c 25 -n 1000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 25 and 5000 requests
-ab -c 25 -n 5000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 25 and 10000 requests
-ab -c 25 -n 10000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 50 and 1000 requests
-ab -c 50 -n 1000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 50 and 5000 requests
-ab -c 50 -n 5000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 50 and 10000 requests
-ab -c 50 -n 10000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 100 and 1000 requests
-ab -c 100 -n 1000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 100 and 5000 requests
-ab -c 100 -n 5000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 100 and 10000 requests
-ab -c 100 -n 10000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 200 and 1000 requests
-ab -c 200 -n 1000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 200 and 5000 requests
-ab -c 200 -n 5000 -r http://192.168.1.104:9001/
-
-# for testing plain express ssr setup with concurrency at 200 and 10000 requests
-ab -c 200 -n 10000 -r http://192.168.1.104:9001/
-
+./run_benchmark.sh http://192.168.1.104:9001/ plain_express
 ```
 
 # Results
-- Check each of the benchmarks file in the apache benchmarks folder
+- Check each of the apache benchmarks folder
+- It has a raw txt output from each benchmark, a tsv file, a graph and a scatter plot as discussed here http://www.bradlanders.com/2013/04/15/apache-bench-and-gnuplot-youre-probably-doing-it-wrong/
 - The tool used is Apache Bencharks 2.3 <$Revision: 1826891 $>
 - Virtual Box Version 6.0.10 r132072 (Qt5.6.3)
 - Host machine OSX High Sierra 10.13.6 (17G65)

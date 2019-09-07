@@ -10,17 +10,39 @@ if [ $# -ne 2 ]; then
     exit 1
 fi
 
-for r in {100,200,300}; do
-  for c in {1,10,25}; do
-    echo 'running' $r 'requests with concurrency' $c
+url=$1
+folder_name=$2
 
+for number_of_requests in {1000,2000,5000,10000}; do
+  for concurrency in {1,10,25,50,100,200}; do
+    echo 'running' $number_of_requests 'requests with concurrency' $concurrency
+
+    path="$(pwd)/apache_benchmarks/"$folder_name'/'
     # make the directory if it doesnt exist else leave it as it is
-    mkdir -p "$(pwd)/apache_benchmarks/"$r'_requests'
+    mkdir -p $path
 
+    file_name='bm_c_'$concurrency'_n_'$number_of_requests
+
+    full_path=$path$file_name
     # Run the apache benchmark test with -c to set concurrency
     # -r to not exit if we get socket errors
     # -n to control how many requests to send
     # write all the output inside a folder of the form '100_requests/bm_10.txt' where 10 is concurrency
-    ab -r -c $c -n $r $1 > "$(pwd)/apache_benchmarks/"$r'_requests/bm_c_'$c'_'$2.txt
+    ab -r -c $concurrency -n $number_of_requests -g $full_path.tsv  $url > $full_path.txt
+
+    # Plot the normal graph
+    # First argument is path where image file must be stored
+    # Second argument is title of the GNU plot
+    # Third argument is the location where it can find the .tsv file containing data
+    gnuplot -c plot_graph.gp $full_path'_graph'.png $folder_name' concurrency '$concurrency' requests '$number_of_requests $full_path.tsv
+
+    # Plot the SCATTER graph
+    # First argument is path where image file must be stored
+    # Second argument is title of the GNU plot
+    # Third argument is the location where it can find the .tsv file containing data
+    gnuplot -c plot_scatter.gp $full_path'_scatter'.png $folder_name' concurrency '$concurrency' requests '$number_of_requests $full_path.tsv
+
+    
+
   done;
 done;
